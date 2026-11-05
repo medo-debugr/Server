@@ -1,0 +1,12 @@
+{
+  "name": "mini-militia-dedicated-server",
+  "version": "3.0.0",
+  "private": true,
+  "description": "Authoritative 2-player game server (zero dependencies) + static game hosting",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "test": "node test/unit.js && node test/net.js && node test/client_e2e.js && node test/solo.js"
+  },
+  "engines": { "node": ">=18" }
+}
