@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
+<title>Mini Militia Style</title>
+<link rel="stylesheet" href="./style.css">
+</head>
+<body>
+<canvas id="game"></canvas>
+<div id="ctl">
+  <div class="b" id="bZoom"><svg viewBox="0 0 64 64"><circle cx="32" cy="32" r="17" fill="none" stroke="#fff" stroke-width="3.5"/><path d="M32 3v15M32 46v15M3 32h15M46 32h15" stroke="#fff" stroke-width="3.5"/></svg><span id="zl">1x</span></div>
+  <div class="b" id="bMenu"><svg viewBox="0 0 64 64"><rect x="19" y="14" width="9" height="36" rx="2" fill="#fff"/><rect x="36" y="14" width="9" height="36" rx="2" fill="#fff"/></svg></div>
+  <div class="b" id="bSwap"><svg viewBox="0 0 64 64"><path d="M6 24h40v8H30l-3 14h-9l3-14H6z" fill="#fff"/><path d="M44 12a15 15 0 0 1 12 16M56 20v10H46" fill="none" stroke="#fff" stroke-width="4" stroke-linecap="round"/></svg></div>
+  <div class="b" id="bRel"><svg viewBox="0 0 64 64"><g fill="#fff"><path d="M8 54V30q6-14 12 0v24z"/><path d="M26 54V30q6-14 12 0v24z"/><path d="M44 54V30q6-14 12 0v24z"/></g></svg></div>
+  <div class="stick" id="sL"><div class="knob"></div></div>
+  <div class="stick" id="sR"><div class="knob"></div></div>
+  <div class="b" id="bMelee"><svg viewBox="0 0 64 64"><g fill="#fff" stroke="#9aa" stroke-width="1.5"><rect x="13" y="16" width="9" height="20" rx="4.5"/><rect x="22" y="12" width="9" height="22" rx="4.5"/><rect x="31" y="13" width="9" height="21" rx="4.5"/><rect x="40" y="17" width="9" height="19" rx="4.5"/><rect x="13" y="28" width="36" height="22" rx="9"/><rect x="5" y="32" width="20" height="10" rx="5" transform="rotate(25 15 37)"/><rect x="19" y="48" width="24" height="10" rx="3"/></g></svg></div>
+  <div class="b" id="bSmoke"><svg viewBox="0 0 64 64"><path d="M16 46a10 10 0 0 1 2-19 14 14 0 0 1 28 3 9 9 0 0 1 2 16z" fill="#cfd3d7" stroke="#8a9096" stroke-width="3"/></svg><i id="sc">2</i></div>
+  <div class="b" id="bGren"><svg viewBox="0 0 64 64"><ellipse cx="32" cy="38" rx="18" ry="20" fill="#6b8f3a" stroke="#2f4a1a" stroke-width="3"/><path d="M16 32h32M16 44h32M32 18v40" stroke="#2f4a1a" stroke-width="2"/><rect x="25" y="8" width="14" height="11" rx="2" fill="#ccc" stroke="#555" stroke-width="2"/><path d="M39 11q11-4 15 6" fill="none" stroke="#ddd" stroke-width="3"/></svg><i id="gc">2</i></div>
+</div>
+<div class="ov show" id="menu">
+<svg id="mBg" viewBox="0 0 1280 720" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+<defs>
+<linearGradient id="bSky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#150d2e"/><stop offset=".33" stop-color="#5b2457"/><stop offset=".6" stop-color="#d9553a"/><stop offset=".78" stop-color="#ffa94d"/></linearGradient>
+<radialGradient id="bSun"><stop offset="0" stop-color="#fff2b0"/><stop offset=".35" stop-color="#ffb347" stop-opacity=".75"/><stop offset="1" stop-color="#ff6a2a" stop-opacity="0"/></radialGradient>
+<radialGradient id="bBoom"><stop offset="0" stop-color="#fff"/><stop offset=".25" stop-color="#ffe27a"/><stop offset=".6" stop-color="#ff7a1f" stop-opacity=".8"/><stop offset="1" stop-color="#c0300a" stop-opacity="0"/></radialGradient>
+<linearGradient id="bGnd" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#4a4128"/><stop offset="1" stop-color="#17140c"/></linearGradient>
+<linearGradient id="bBeam" x1="0" y1="1" x2="0" y2="0"><stop offset="0" stop-color="#fff" stop-opacity=".32"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></linearGradient>
+<radialGradient id="bVig" cx=".5" cy=".45" r=".72"><stop offset=".62" stop-color="#000" stop-opacity="0"/><stop offset="1" stop-color="#000" stop-opacity=".62"/></radialGradient>
+<filter id="bBlur" x="-20%" y="-60%" width="140%" height="220%"><feGaussianBlur stdDeviation="16"/></filter>
+</defs>
+<rect width="1280" height="720" fill="url(#bSky)"/>
+<circle cx="640" cy="470" r="340" fill="url(#bSun)"/>
+<g fill="#fff" opacity=".75"><circle cx="90" cy="50" r="1.6"/><circle cx="250" cy="95" r="1.2"/><circle cx="470" cy="40" r="1.6"/><circle cx="760" cy="70" r="1.3"/><circle cx="980" cy="38" r="1.6"/><circle cx="1180" cy="90" r="1.2"/></g>
+<g class="mm-d1" filter="url(#bBlur)" fill="#2a1730" opacity=".85"><ellipse cx="220" cy="150" rx="270" ry="48"/><ellipse cx="820" cy="110" rx="330" ry="44"/><ellipse cx="1120" cy="240" rx="240" ry="40"/></g>
+<g class="mm-d2" filter="url(#bBlur)" fill="#7a3a4a" opacity=".55"><ellipse cx="520" cy="270" rx="300" ry="38"/><ellipse cx="60" cy="330" rx="220" ry="36"/><ellipse cx="1000" cy="360" rx="260" ry="34"/></g>
+<g class="mm-beam" style="transform-origin:170px 560px"><path d="M160 560 L40 0 L300 0z" fill="url(#bBeam)"/></g>
+<g class="mm-beam r" style="transform-origin:1110px 560px"><path d="M1100 560 L980 0 L1240 0z" fill="url(#bBeam)"/></g>
+<path fill="#2b1429" d="M0 480V410h38V365h52v45h40V345l22-14 22 14v80h58v-40h56l14-34h34v90h62v-38h52v50h60v-70l20-20 24 20v90h70v-45h60v-62h46v107h60v-30h48v-76l18-16 18 16v106h70v-50h56v-58h44v108h58v-34h50v-84l20-18 22 18v118h64v-40h52v-52h40v92h56V480z"/>
+<path fill="#1c0f1f" d="M0 520Q160 470 340 505T700 495T1040 500T1280 480V620H0z"/>
+<g style="transform-box:fill-box;transform-origin:center"><circle class="mm-boom" cx="330" cy="448" r="74" fill="url(#bBoom)"/><circle class="mm-boom" style="animation-delay:-1.3s" cx="905" cy="430" r="92" fill="url(#bBoom)"/><circle class="mm-boom" style="animation-delay:-2.2s" cx="1150" cy="470" r="60" fill="url(#bBoom)"/><circle class="mm-boom" style="animation-delay:-.7s" cx="610" cy="486" r="46" fill="url(#bBoom)"/></g>
+<g class="mm-fly" fill="#0e0713"><ellipse cx="0" cy="120" rx="30" ry="11"/><path d="M26 114L78 106 78 112 28 124z"/><rect x="-3" y="100" width="6" height="9"/><path d="M-46 100H46" stroke="#0e0713" stroke-width="3"/></g>
+<g class="mm-fly j" fill="#0e0713"><path d="M0 60L70 54 92 58 70 63z"/><path d="M26 58L10 44 34 58z"/></g>
+<g fill="none" stroke="#ffe27a" stroke-width="3" stroke-linecap="round" stroke-dasharray="14 106"><path class="mm-tr" d="M120 560L560 420"/><path class="mm-tr" style="animation-delay:-.6s" d="M1200 560L760 430"/><path class="mm-tr" style="animation-delay:-1.1s" d="M60 520L430 400"/><path class="mm-tr" style="animation-delay:-.3s" d="M1260 520L880 410"/></g>
+<path fill="#171009" d="M0 640Q200 560 420 585T840 580T1280 560V720H0z"/>
+<g fill="#0c0708"><path d="M1000 566h120l14-22h56l6 22h40v18h-250z"/><rect x="1150" y="526" width="64" height="20" rx="4"/><rect x="1210" y="533" width="76" height="6"/><path d="M60 576h110l12-18h50l8 18h30v14H60z"/></g>
+<path fill="url(#bGnd)" d="M0 558Q320 540 640 552T1280 546V720H0z"/><path d="M0 558Q320 540 640 552T1280 546" fill="none" stroke="#8a7648" stroke-width="3"/>
+<g fill="#b59a62" stroke="#4a3a1c" stroke-width="3"><rect x="20" y="622" width="96" height="30" rx="14"/><rect x="104" y="622" width="96" height="30" rx="14"/><rect x="62" y="594" width="96" height="30" rx="14"/><rect x="1084" y="626" width="96" height="30" rx="14"/><rect x="1168" y="626" width="96" height="30" rx="14"/><rect x="1126" y="598" width="96" height="30" rx="14"/></g>
+<g stroke="#241a0c" stroke-width="3"><rect x="240" y="640" width="44" height="64" rx="6" fill="#6a7a3a"/><rect x="960" y="636" width="44" height="64" rx="6" fill="#a3402a"/><rect x="292" y="664" width="52" height="42" fill="#8a6a3a"/></g>
+<g stroke="#0d0d0d" stroke-width="3" fill="none"><path d="M0 668l22-16 22 16 22-16 22 16 22-16 22 16"/><path d="M1060 690l22-16 22 16 22-16 22 16 22-16 22 16 22-16 22 16"/><path d="M360 600l30 40M390 600l-30 40M420 600l30 40M450 600l-30 40" stroke="#1d1d1d" stroke-width="5"/></g>
+<g fill="#ffb84a"><circle class="mm-em" cx="150" cy="560" r="2.6"/><circle class="mm-em" style="animation-delay:-1.4s" cx="420" cy="540" r="2"/><circle class="mm-em" style="animation-delay:-2.6s" cx="700" cy="556" r="2.6"/><circle class="mm-em" style="animation-delay:-3.4s" cx="960" cy="545" r="2"/><circle class="mm-em" style="animation-delay:-.8s" cx="1180" cy="550" r="2.6"/><circle class="mm-em" style="animation-delay:-4.2s" cx="560" cy="570" r="1.8"/></g>
+<rect width="1280" height="720" fill="url(#bVig)"/>
+</svg>
+<div id="mStage">
+  <div id="mTitle">MINI MILITIA</div>
+  <div id="mSideL"><button class="tile t-set" id="bGear"><svg viewBox="0 0 100 100"><g fill="#dfe3e8" stroke="#69727d" stroke-width="4" stroke-linejoin="round"><rect x="42" y="4" width="16" height="92" rx="5"/><rect x="42" y="4" width="16" height="92" rx="5" transform="rotate(45 50 50)"/><rect x="42" y="4" width="16" height="92" rx="5" transform="rotate(90 50 50)"/><rect x="42" y="4" width="16" height="92" rx="5" transform="rotate(135 50 50)"/><circle cx="50" cy="50" r="31"/></g><circle cx="50" cy="50" r="30" fill="#e9edf1"/><circle cx="50" cy="50" r="13" fill="#2760cf" stroke="#69727d" stroke-width="4"/></svg><span>Settings</span></button><button class="tile t-inv" id="bFit"><svg viewBox="0 0 100 80"><path d="M10 38 Q10 6 50 6 Q90 6 90 38z" fill="#a6602c" stroke="#4a2410" stroke-width="4"/><rect x="10" y="36" width="80" height="38" rx="4" fill="#8a4a20" stroke="#4a2410" stroke-width="4"/><rect x="10" y="32" width="80" height="10" fill="#f6c21a" stroke="#7a5200" stroke-width="3"/><rect x="24" y="8" width="10" height="66" fill="#f6c21a" stroke="#7a5200" stroke-width="3"/><rect x="66" y="8" width="10" height="66" fill="#f6c21a" stroke="#7a5200" stroke-width="3"/><rect x="41" y="34" width="18" height="22" rx="4" fill="#f6c21a" stroke="#7a5200" stroke-width="3"/><circle cx="50" cy="43" r="3.5" fill="#4a2410"/><rect x="48.5" y="43" width="3" height="8" fill="#4a2410"/></svg><span>Inventory</span></button><button class="tile t-map" id="bMaps"><svg viewBox="0 0 100 80"><path d="M6 14 L34 8 L66 16 L94 8 L94 66 L66 74 L34 66 L6 74z" fill="#f6e6b4" stroke="#8a6a30" stroke-width="3" stroke-linejoin="round"/><path d="M34 8 V66 M66 16 V74" stroke="#c9a96a" stroke-width="2"/><g fill="#3aa14a" stroke="#1d5a28" stroke-width="2"><path d="M16 48 l8 -18 8 18z"/><path d="M42 58 l8 -18 8 18z"/><path d="M70 56 l8 -16 8 16z"/></g><path d="M20 62 Q48 44 70 36" fill="none" stroke="#c0333a" stroke-width="2.5" stroke-dasharray="4 4"/><path d="M76 36 L67 24 A10 10 0 1 1 85 24Z" fill="#e0262e" stroke="#7a0f14" stroke-width="2.5"/><circle cx="76" cy="21" r="3.5" fill="#fff"/></svg><span>Maps</span></button></div>
+  <div id="mSideR"><button class="wide w-join" id="bJoin"><svg viewBox="0 0 100 70"><g stroke="#0d2b66" stroke-width="3"><circle cx="30" cy="20" r="13" fill="#3b82f6"/><path d="M6 66 Q6 38 30 38 Q54 38 54 66z" fill="#3b82f6"/><circle cx="68" cy="22" r="13" fill="#4ccf3a"/><path d="M44 66 Q44 40 68 40 Q92 40 92 66z" fill="#4ccf3a"/></g></svg><span>Join</span></button><button class="wide w-host" id="bHost"><svg viewBox="0 0 70 80"><g stroke="#2a3340" stroke-width="3" fill="#e6ebf2"><rect x="6" y="6" width="58" height="20" rx="5"/><rect x="6" y="30" width="58" height="20" rx="5"/><rect x="6" y="54" width="58" height="20" rx="5"/></g><g fill="#3b82f6"><circle cx="18" cy="16" r="3.2"/><circle cx="18" cy="40" r="3.2"/><circle cx="18" cy="64" r="3.2"/></g><path d="M30 16h28M30 40h28M30 64h28" stroke="#2a3340" stroke-width="2.5"/></svg><span>Host</span></button></div>
+  <div id="mGlow"></div><canvas id="mHero"></canvas>
+  <div id="mname"></div>
+  <div id="mPlayRow"><button class="arr" id="mPrev" aria-label="Previous map"><svg viewBox="0 0 64 64"><path d="M46 8 L14 32 L46 56z" fill="#ffa62e" stroke="#7a3a00" stroke-width="5" stroke-linejoin="round"/></svg></button><button class="play" id="bPlay"><svg viewBox="0 0 64 64"><path d="M14 8 L56 32 L14 56z" fill="#fff" stroke="#0a3a14" stroke-width="5" stroke-linejoin="round"/></svg><span>Play</span></button><button class="arr nx" id="mNext" aria-label="Next map"><svg viewBox="0 0 64 64"><path d="M46 8 L14 32 L46 56z" fill="#ffa62e" stroke="#7a3a00" stroke-width="5" stroke-linejoin="round"/></svg></button></div>
+</div>
+<button id="bResume" style="display:none">BACK TO BATTLE</button>
+</div>
+<div class="ov" id="settings"><div class="card" id="scard"><h2>SETTINGS</h2>
+  <button class="sb" id="bMus">MUSIC: ON</button><button class="sb" id="bSnd">SOUND: ON</button><button class="sb" id="bEdit">EDIT BUTTONS</button><button class="sb" id="bLang">LANGUAGE: English</button><button class="sb" id="bSetClose">CLOSE</button>
+</div></div>
+<div class="ov" id="fit"><div class="card wide"><div id="ftabs"><button class="ftab" data-t="outfit">OUTFIT</button><button class="ftab" data-t="body">BODY</button><button class="ftab" data-t="hair">HAIR</button><button class="ftab" data-t="cap">CAP</button><button class="ftab" data-t="face">FACE</button><button class="ftab" data-t="shoe">SHOES</button><button id="fBack">BACK</button></div><div id="fcol"></div><div id="fgrid"></div></div></div>
+<div class="ov" id="maps"><div class="card wide"><h2>SELECT MAP</h2><div id="grid"></div><button id="bBack">BACK</button></div></div>
+<div class="ov" id="net"><div class="card wide"><h2 id="nT"></h2><p id="nInfo" class="hint"></p>
+  <canvas id="nQR"></canvas><video id="nVid" playsinline muted></video>
+  <div id="nOutBox"><textarea id="nOut" readonly></textarea><div class="row"><button id="nCopy">COPY</button><button id="nShare">SHARE</button></div></div>
+  <div id="nInBox"><button id="nScan">SCAN QR</button><textarea id="nIn" placeholder="Paste code here"></textarea><button id="nGo">CONNECT</button></div>
+  <div class="row" style="margin-top:12px"><button id="nBack">BACK</button></div></div></div>
+<div class="ov" id="lobby"><div class="card"><h2>LOBBY</h2><p class="hint" style="margin:0 0 8px">HOST + GUEST connected</p>
+  <canvas id="lpv"></canvas><div id="lmap"></div><div id="ltime"></div>
+  <div id="lHost"><div class="row"><button id="lPrev">&#9664;</button><button id="lMaps">CHANGE MAP</button><button id="lNext">&#9654;</button></div>
+  <div class="row" style="margin:10px 0"><button id="tM">TIME -</button><button id="tP">TIME +</button></div>
+  <div class="row"><button id="lStart">START</button></div></div>
+  <p id="lWait" class="hint" style="display:none">Waiting for the host to start...</p>
+  <div class="row" style="margin-top:10px"><button id="lLeave">LEAVE</button></div></div></div>
+<div class="ov" id="over"><div class="card"><h1>TIME'S UP</h1><p id="rank"></p><div class="row"><button id="bAgain">PLAY AGAIN</button><button id="bToMenu">MENU</button></div></div></div>
+<div id="editBar"><span>DRAG THE BUTTONS TO MOVE THEM</span><span class="esz"><b>SIZE</b><button id="eMinus">-</button><input type="range" id="eSize" min="50" max="220" step="5" value="100" disabled><button id="ePlus">+</button><i id="eVal">--</i></span><button id="eReset">RESET</button><button id="eDone">DONE</button></div>
+<div id="bPick"><canvas id="bPickC" width="160" height="160"></canvas></div>
+<!-- Multiplayer server: when this page is served by the game server (recommended) nothing is needed here.
+     Only if the page lives on a DIFFERENT host, uncomment and set the server address:
+<script>window.MP_SERVER_URL = 'https://YOUR-GAME-SERVER';</script> -->
+<script src="./script.js"></script>
+</body>
+</html>
